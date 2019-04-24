@@ -1,0 +1,24 @@
+{
+   "type" : "object",
+   "properties" : {
+     "items" : {
+       "type": "array"
+     },
+     "totalItems": {
+       "type": "number"
+     },
+     "page": {
+       "type": "number"
+     },
+     "limit": {
+       "type": "number"
+     },
+     "pages": {
+       "type": "number"
+     },
+     "defaultCover": {
+       "type": "string"
+     }
+   },
+   "required": ["items", "totalItems", "page", "limit", "pages", "defaultCover"]
+ }

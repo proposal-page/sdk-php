@@ -1,0 +1,16 @@
+# ignore IDE/hidden/OS cache files
+*~
+nbproject
+nb-configuration.xml
+Session.vim
+*.tmproj
+*.tmproject
+tmtags
+Thumbs.db
+Desktop.ini
+.phpunit.result.cache
+.php_cs.cache
+coverage/*
+
+# ignore Composer downloads
+/vendor/*
