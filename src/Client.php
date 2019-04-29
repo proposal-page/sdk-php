@@ -4,7 +4,6 @@ namespace ProposalPage\Sdk;
 
 use Appstract\LushHttp\Lush;
 use Appstract\LushHttp\Response\LushResponse;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class Client
 {
