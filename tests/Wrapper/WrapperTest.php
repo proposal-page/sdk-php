@@ -49,4 +49,24 @@ class WrapperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('token', $client->getToken());
     }
+
+    /** @test */
+    public function it_sets_token_when_authenticate_is_called()
+    {
+        $client = new Client();
+
+        $client->authenticate('gian_bine@hotmail.com', 'gian6280');
+
+        $this->assertNotNull($client->getToken());
+    }
+
+    /** @test */
+    public function it_does_not_sets_token_when_authenticate_is_called_with_set_token_flag_set_to_false()
+    {
+        $client = new Client();
+
+        $client->authenticate('gian_bine@hotmail.com', 'gian6280', false);
+
+        $this->assertNull($client->getToken());
+    }
 }

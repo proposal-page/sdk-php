@@ -4,6 +4,7 @@ namespace ProposalPage\Sdk;
 
 use Appstract\LushHttp\Lush;
 use Appstract\LushHttp\Response\LushResponse;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Client
 {
@@ -23,12 +24,18 @@ class Client
     }
 
     // Auth
-    public function authenticate(string $username, string $password)
+    public function authenticate(string $username, string $password, bool $setToken = true)
     {
-        return $this->request('POST', '/accounts/auth/token', [
+        $response = $this->request('POST', '/accounts/auth/token', [
             'username' => $username,
             'password' => $password
         ]);
+
+        if ($setToken) {
+            $this->token = $response->token;
+        }
+
+        return $response;
     }
 
     public function authMe()
