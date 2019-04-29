@@ -1,8 +1,10 @@
 # Proposal Page - PHP SDK
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/proposal-page/sdk-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/proposal-page/sdk-php/?branch=master)
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/proposal-page/sdk-php.svg?style=flat-square)](https://packagist.org/packages/proposal-page/sdk-php)
-[![Total Downloads](https://img.shields.io/packagist/dt/proposal-page/sdk-php.svg?style=flat-square)](https://packagist.org/packages/proposal-page/sdk-php)
+[![Latest Stable Version](https://poser.pugx.org/proposal-page/sdk-php/v/stable)](https://packagist.org/packages/proposal-page/sdk-php)
+[![Latest Unstable Version](https://poser.pugx.org/proposal-page/sdk-php/v/unstable)](https://packagist.org/packages/proposal-page/sdk-php)
+[![License](https://poser.pugx.org/proposal-page/sdk-php/license)](https://packagist.org/packages/proposal-page/sdk-php)
+[![Total Downloads](https://poser.pugx.org/proposal-page/sdk-php/downloads)](https://packagist.org/packages/proposal-page/sdk-php)
 
 Proposal Page is the most modern way to manage your business proposals.
 
