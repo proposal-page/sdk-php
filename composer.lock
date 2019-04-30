@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe6332470daef763f1002478c8407602",
+    "content-hash": "71f29fd2aed3562c17297b1b3e6c3fa8",
     "packages": [
         {
             "name": "appstract/lush-http",
@@ -64,6 +64,67 @@
                 "php"
             ],
             "time": "2018-05-28T08:35:31+00:00"
+        },
+        {
+            "name": "bentools/querystring",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bpolaszek/querystring.git",
+                "reference": "cdb5f148e5abdd6e741e7671782a23bac55a947d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bpolaszek/querystring/zipball/cdb5f148e5abdd6e741e7671782a23bac55a947d",
+                "reference": "cdb5f148e5abdd6e741e7671782a23bac55a947d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "league/uri": "^5.0",
+                "phpunit/phpunit": "@stable",
+                "satooshi/php-coveralls": "@stable",
+                "squizlabs/php_codesniffer": "@stable",
+                "symfony/var-dumper": "^3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BenTools\\QueryString\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Beno!t POLASZEK",
+                    "email": "bpolaszek@gmail.com",
+                    "homepage": "http://www.polaszek.fr",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Query String manipulation library. PHP 7.1+. No dependency, immutable, PSR-7 compliant.",
+            "keywords": [
+                "psr-7",
+                "psr7",
+                "query string",
+                "querystring",
+                "uri",
+                "url"
+            ],
+            "time": "2019-02-08T14:37:31+00:00"
         },
         {
             "name": "doctrine/inflector",
