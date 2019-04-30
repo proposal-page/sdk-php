@@ -4,6 +4,7 @@ namespace ProposalPage\Sdk;
 
 use Appstract\LushHttp\Lush;
 use Appstract\LushHttp\Response\LushResponse;
+use function BenTools\QueryString\query_string;
 
 class Client
 {
@@ -59,9 +60,12 @@ class Client
         return $this->request('POST', "/projects/${templateId}/copy");
     }
 
-    public function listProjects()
+    public function listProjects($page = 1, $itemsPerPage = 6)
     {
-        return $this->request('GET', '/projects');
+        return $this->request('GET', '/projects', [], [
+            'page' => $page,
+            'itemsPerPage' => $itemsPerPage
+        ]);
     }
 
     public function listProject($projectId)
@@ -270,12 +274,13 @@ class Client
      * @param string $method
      * @param string $path
      * @param array $params
+     * @param array $queryStringParams
      * @return LushResponse
      */
-    private function request(string $method, string $path, array $params = [])
+    private function request(string $method, string $path, array $params = [], array $queryStringParams = [])
     {
         return $this->httpClient
-                ->url("{$this->apiUrl}{$path}", $params)
+                ->url($this->getRequestUri($path, $queryStringParams), $params)
                 ->headers($this->getRequestHeaders())
                 ->$method();
     }
@@ -292,5 +297,27 @@ class Client
         return [
             'Authorization' => "Bearer {$this->token}"
         ];
+    }
+
+    /**
+     * @param array $params
+     * @return string
+     */
+    private function getRequestQueryString(array $params = [])
+    {
+        if (count($params) === 0) {
+            return "";
+        }
+
+        $queryString = query_string($params);
+
+        return "?" . urldecode((string) $queryString);
+    }
+
+    private function getRequestUri(string $path, array $queryStringParams = [])
+    {
+        $queryString = $this->getRequestQueryString($queryStringParams);
+
+        return "{$this->apiUrl}{$path}{$queryString}";
     }
 }

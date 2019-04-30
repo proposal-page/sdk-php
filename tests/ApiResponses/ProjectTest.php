@@ -44,6 +44,31 @@ class ProjectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_list_user_projects_paginated_in_a_specific_page()
+    {
+        $response = $this->authenticatedTestClient->listProjects(2);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(2, $response->page);
+        $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
+    }
+
+    /** @test */
+    public function it_can_list_user_projects_paginated_with_a_specific_quantity_of_items_per_page()
+    {
+        $response = $this->authenticatedTestClient->listProjects(2, 3);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(2, $response->page);
+        $this->assertEquals(3, $response->limit);
+        $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
+    }
+
+    /** @test */
     public function it_can_list_project_templates_paginated()
     {
         $response = $this->authenticatedTestClient->listTemplates();
