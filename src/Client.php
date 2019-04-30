@@ -44,9 +44,12 @@ class Client
     }
 
     // Templates
-    public function listTemplates()
+    public function listTemplates($page = 1, $itemsPerPage = 6)
     {
-        return $this->request('GET', '/projects/templates');
+        return $this->request('GET', '/projects/templates', [], [
+            'page' => $page,
+            'itemsPerPage' => $itemsPerPage
+        ]);
     }
 
     // Projects
