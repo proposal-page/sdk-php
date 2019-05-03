@@ -12,12 +12,12 @@ class ProjectTest extends TestCase
             'blocks' => []
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
 
-        return ($response->_id);
+        return ($response->json['_id']);
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class ProjectTest extends TestCase
         $templateId = '5cb47ec98497e9001ad9a1b2';
         $response = $this->authenticatedTestClient->createProjectFromTemplate($templateId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
@@ -37,7 +37,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listProjects();
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
@@ -48,10 +48,10 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listProjects(2);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(2, $response->page);
+        $this->assertEquals(2, $response->json['page']);
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
     }
 
@@ -60,11 +60,11 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listProjects(2, 3);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(2, $response->page);
-        $this->assertEquals(3, $response->limit);
+        $this->assertEquals(2, $response->json['page']);
+        $this->assertEquals(3, $response->json['limit']);
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
     }
 
@@ -73,7 +73,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listTemplates();
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
@@ -84,10 +84,10 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listTemplates(2);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(2, $response->page);
+        $this->assertEquals(2, $response->json['page']);
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
     }
 
@@ -96,11 +96,11 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listTemplates(2, 3);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals(2, $response->page);
-        $this->assertEquals(3, $response->limit);
+        $this->assertEquals(2, $response->json['page']);
+        $this->assertEquals(3, $response->json['limit']);
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
     }
 
@@ -113,7 +113,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listProject($testProjectId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
@@ -130,11 +130,11 @@ class ProjectTest extends TestCase
             'title' => 'Updated Project Title',
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
-        $this->assertEquals('Updated Project Title', $response->title);
+        $this->assertEquals('Updated Project Title', $response->json['title']);
     }
 
     /**
@@ -146,7 +146,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->cloneProject($testProjectId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
@@ -161,7 +161,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->setProjectPassword($testProjectId, 'password');
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
@@ -176,7 +176,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->publishProject($testProjectId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
@@ -191,7 +191,7 @@ class ProjectTest extends TestCase
     {
         $response = $this->authenticatedTestClient->secureProject($testProjectId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));

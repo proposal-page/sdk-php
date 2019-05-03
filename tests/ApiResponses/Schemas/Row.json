@@ -9,7 +9,13 @@
     },
     "columns": {
       "type": "array"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
     }
   },
-  "required": [ "_id", "description", "columns"]
+  "required": [ "_id", "description", "columns", "createdAt", "updatedAt"]
 }

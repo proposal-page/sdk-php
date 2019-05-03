@@ -11,12 +11,12 @@ class RowTest extends TestCase
             'description' => 'New row'
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Row'));
 
-        return $response->_id;
+        return $response->json['_id'];
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class RowTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listRows($this->testProjectId, $this->testBlockId);
 
-        $rows = json_decode($response->getContent(), true);
+        $rows = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -42,7 +42,7 @@ class RowTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listRow($this->testProjectId, $this->testBlockId, $testRowId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Row'));
@@ -59,11 +59,11 @@ class RowTest extends TestCase
             'description' => 'Updated description'
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Row'));
-        $this->assertEquals('Updated description', $response->description);
+        $this->assertEquals('Updated description', $response->json['description']);
     }
 
     /**
@@ -75,7 +75,7 @@ class RowTest extends TestCase
     {
         $response = $this->authenticatedTestClient->cloneRow($this->testProjectId, $this->testBlockId, $testRowId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Row'));
@@ -90,7 +90,7 @@ class RowTest extends TestCase
     {
         $response = $this->authenticatedTestClient->cloneRow($this->testProjectId, $this->testBlockId, $testRowId, 0);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Row'));

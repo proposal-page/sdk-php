@@ -9,7 +9,13 @@
     },
     "size": {
       "type": "number"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
     }
   },
-  "required": [ "_id", "contents", "size"]
+  "required": [ "_id", "contents", "size", "createdAt", "updatedAt"]
 }

@@ -10,7 +10,7 @@ class AuthTest extends TestCase
         $response = $this->unauthenticatedTestClient->authenticate('teste@teste.com', 'teste');
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertNotNull($response->token);
+        $this->assertNotNull($response->json['token']);
     }
 
     /** @test */
@@ -19,6 +19,6 @@ class AuthTest extends TestCase
         $response = $this->authenticatedTestClient->authMe();
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertNotNull($response->id);
+        $this->assertNotNull($response->json['id']);
     }
 }

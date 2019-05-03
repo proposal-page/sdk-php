@@ -17,12 +17,12 @@ class ColumnTest extends TestCase
             ]
         );
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Column'));
 
-        return $response->_id;
+        return $response->json['_id'];
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class ColumnTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listColumns($this->testProjectId, $this->testBlockId, $this->testRowId);
 
-        $columns = json_decode($response->getContent(), true);
+        $columns = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -48,7 +48,7 @@ class ColumnTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listColumn($this->testProjectId, $this->testBlockId, $this->testRowId, $testColumnId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Column'));
@@ -71,11 +71,11 @@ class ColumnTest extends TestCase
             ]
         );
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Column'));
-        $this->assertEquals(11, $response->size);
+        $this->assertEquals(11, $response->json['size']);
     }
 
     /**
