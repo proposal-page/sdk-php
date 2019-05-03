@@ -328,7 +328,7 @@ class Client
         ];
     }
 
-    private function isSuccessfulResponse(ResponseInterface $response)
+    private function isSuccessfulResponse($response)
     {
         if (! $response) {
             return false;
