@@ -41,12 +41,12 @@ class ContentTest extends TestCase
             ]
         );
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Content'));
 
-        return $response->_id;
+        return $response->json['_id'];
     }
 
     /** @test */
@@ -59,15 +59,13 @@ class ContentTest extends TestCase
             $this->testColumnId
         );
 
-        $contents = json_decode($response->getContent(), true);
+        $contents = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
 
         foreach ($contents as $content) {
             $this->assertJsonDocumentMatchesSchema($content, $this->getSchema('Content'));
         }
-
-        return $response->_id;
     }
 
     /**
@@ -85,7 +83,7 @@ class ContentTest extends TestCase
             $testContentId
         );
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Content'));
@@ -125,7 +123,7 @@ class ContentTest extends TestCase
             ]
         );
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Content'));

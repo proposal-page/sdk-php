@@ -11,7 +11,7 @@ $client = new ProposalPageClient();
 $response = $client->authenticate('teste@teste.com', 'teste');
 
 $responseStatusCode = $response->getStatusCode(); // 200 OK
-$token = $response->token; // Your Bearer Token to use in all endpoints that require authentication
+$token = $response->json['token']; // Your Bearer Token to use in all endpoints that require authentication
 ```
 
 ### Me
@@ -26,7 +26,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->authMe();
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$id = $response->id; // Your user id
+$id = $response->json['id']; // Your user id
 ```
 
 ## Project
@@ -45,7 +45,7 @@ $response = $client->createProject([
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 201 Created
-$project = json_decode($response->getContent(), true); // Your created project
+$project = $response->json; // Your created project
 ```
 
 ### Create from Template
@@ -60,7 +60,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->createProjectFromTemplate('template-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your created project from a template
+$project = $response->json; // Your created project from a template
 ```
 
 ### List
@@ -75,7 +75,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listProjects();
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$projects = json_decode($response->getContent(), true); // Paginated project list
+$projects = $response->json; // Paginated project list
 ```
 
 ### List Templates
@@ -90,7 +90,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listTemplates();
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$templates = json_decode($response->getContent(), true); // Paginated template list
+$templates = $response->json; // Paginated template list
 ```
 
 ### Retrieve
@@ -105,7 +105,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listProject('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Specific project retrieved by id
+$project = $response->json; // Specific project retrieved by id
 ```
 
 ### Update
@@ -122,7 +122,7 @@ $response = $client->updateProject('project-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your updated project
+$project = $response->json; // Your updated project
 ```
 
 ### Clone
@@ -137,7 +137,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->cloneProject('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your cloned project
+$project = $response->json; // Your cloned project
 ```
 
 ### Set Password
@@ -152,7 +152,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->setProjectPassword('project-id', 'pasword');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your project with a password set.
+$project = $response->json; // Your project with a password set.
 ```
 
 ### Publish/unpublish
@@ -167,7 +167,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->publishProject('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your published/unpublished project.
+$project = $response->json; // Your published/unpublished project.
 ```
 
 ### Secure/unsecure
@@ -182,7 +182,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->secureProject('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$project = json_decode($response->getContent(), true); // Your secured/unsecured project.
+$project = $response->json; // Your secured/unsecured project.
 ```
 
 ### Generate/regenerate Cover
@@ -211,7 +211,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->viewProjectAndNotify('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$emailSent = $response->emailSent; // True if email is sent to the project owner
+$emailSent = $response->json['emailSent']; // True if email is sent to the project owner
 ```
 
 ### Delete
@@ -243,7 +243,7 @@ $response = $client->createBlock('project-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 201 Created
-$block = json_decode($response->getContent(), true); // Your created block
+$block = $response->json; // Your created block
 ```
 
 ### List
@@ -258,7 +258,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listBlocks('project-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$blocks = json_decode($response->getContent(), true); // Project block list
+$blocks = $response->json; // Project block list
 ```
 
 ### Retrieve
@@ -273,7 +273,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listBlock('project-id', 'block-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$block = json_decode($response->getContent(), true); // Your specific project block
+$block = $response->json; // Your specific project block
 ```
 
 ### Update
@@ -290,7 +290,7 @@ $response = $client->updateBlock('project-id', 'block-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$block = json_decode($response->getContent(), true); // Your updated project block
+$block = $response->json; // Your updated project block
 ```
 
 ### Move forward
@@ -305,7 +305,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->moveBlockForward('project-id', 'block-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$block = json_decode($response->getContent(), true); // Your specific project block moved forward
+$block = $response->json; // Your specific project block moved forward
 ```
 
 ### Move backward
@@ -320,7 +320,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->moveBlockBackward('project-id', 'block-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$block = json_decode($response->getContent(), true); // Your specific project block moved backward
+$block = $response->json; // Your specific project block moved backward
 ```
 
 ### Clone
@@ -339,7 +339,7 @@ $response = $client->cloneBlock('project-id', 'block-id');
 $response = $client->cloneBlock('project-id', 'block-id', 0);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$block = json_decode($response->getContent(), true); // Your cloned block
+$block = $response->json; // Your cloned block
 ```
 
 ### Delete
@@ -372,7 +372,7 @@ $response = $client->createRow('project-id', 'block-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 201 Created
-$block = json_decode($response->getContent(), true); // Your created row
+$block = $response->json; // Your created row
 ```
 
 ### List
@@ -387,7 +387,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listRows('project-id', 'block-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$rows = json_decode($response->getContent(), true); // Block rows
+$rows = $response->json; // Block rows
 ```
 
 ### Retrieve
@@ -402,7 +402,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listRow('project-id', 'block-id', 'row-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$row = json_decode($response->getContent(), true); // Your specific block row
+$row = $response->json; // Your specific block row
 ```
 
 ### Update
@@ -419,7 +419,7 @@ $response = $client->updateRow('project-id', 'block-id', 'row-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$row = json_decode($response->getContent(), true); // Your updated block row
+$row = $response->json; // Your updated block row
 ```
 
 ### Clone
@@ -438,7 +438,7 @@ $response = $client->cloneRow('project-id', 'block-id', 'row-id');
 $response = $client->cloneRow('project-id', 'block-id', 'row-id', 0);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$row = json_decode($response->getContent(), true); // Your cloned row
+$row = $response->json; // Your cloned row
 ```
 
 ### Delete
@@ -471,7 +471,7 @@ $response = $client->createColumn('project-id', 'block-id', 'row-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 201 Created
-$block = json_decode($response->getContent(), true); // Your created column
+$block = $response->json; // Your created column
 ```
 
 ### List
@@ -486,7 +486,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listColumns('project-id', 'block-id', 'row-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$rows = json_decode($response->getContent(), true); // Row columns
+$rows = $response->json; // Row columns
 ```
 
 ### Retrieve
@@ -501,7 +501,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listColumn('project-id', 'block-id', 'row-id', 'column-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$row = json_decode($response->getContent(), true); // Your specific row column
+$row = $response->json; // Your specific row column
 ```
 
 ### Update
@@ -518,7 +518,7 @@ $response = $client->updateRow('project-id', 'block-id', 'row-id', [
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$row = json_decode($response->getContent(), true); // Your updated block row
+$row = $response->json; // Your updated block row
 ```
 
 ### Delete
@@ -552,7 +552,7 @@ $response = $client->createContent('project-id', 'block-id', 'row-id', 'column-i
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 201 Created
-$block = json_decode($response->getContent(), true); // Your created content
+$block = $response->json; // Your created content
 ```
 
 ### List
@@ -567,7 +567,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listContents('project-id', 'block-id', 'row-id', 'column-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$rows = json_decode($response->getContent(), true); // Column contents
+$rows = $response->json; // Column contents
 ```
 
 ### Retrieve
@@ -582,7 +582,7 @@ $client->authenticate('teste@teste.com', 'teste');
 $response = $client->listContent('project-id', 'block-id', 'row-id', 'column-id', 'content-id');
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$content = json_decode($response->getContent(), true); // Your specific column content
+$content = $response->json; // Your specific column content
 ```
 
 ### Update
@@ -603,7 +603,7 @@ $response = $client->updateContent('project-id', 'block-id', 'row-id', 'column-i
 ]);
 
 $responseStatusCode = $response->getStatusCode(); // 200 Ok
-$content = json_decode($response->getContent(), true); // Your updated column content
+$content = $response->json; // Your updated column content
 ```
 
 ### Delete

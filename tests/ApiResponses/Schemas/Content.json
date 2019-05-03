@@ -12,7 +12,13 @@
     },
     "data": {
       "type": "object"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
     }
   },
-  "required": [ "_id", "type", "style", "data"]
+  "required": [ "_id", "type", "style", "data", "createdAt", "updatedAt"]
 }

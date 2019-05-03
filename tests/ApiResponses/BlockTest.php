@@ -11,12 +11,12 @@ class BlockTest extends TestCase
             'description' => 'New block'
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
 
-        return $response->_id;
+        return $response->json['_id'];
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listBlocks($this->testProjectId);
 
-        $blocks = json_decode($response->getContent(), true);
+        $blocks = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
 
@@ -42,7 +42,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->listBlock($this->testProjectId, $testBlockId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
@@ -59,11 +59,11 @@ class BlockTest extends TestCase
             'description' => 'Updated description'
         ]);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
-        $this->assertEquals('Updated description', $response->description);
+        $this->assertEquals('Updated description', $response->json['description']);
     }
 
     /**
@@ -75,7 +75,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->moveBlockForward($this->testProjectId, $testBlockId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
@@ -90,7 +90,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->moveBlockBackward($this->testProjectId, $testBlockId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
@@ -105,7 +105,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->cloneBlock($this->testProjectId, $testBlockId);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
@@ -120,7 +120,7 @@ class BlockTest extends TestCase
     {
         $response = $this->authenticatedTestClient->cloneBlock($this->testProjectId, $testBlockId, 0);
 
-        $json = json_decode($response->getContent(), true);
+        $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Block'));
