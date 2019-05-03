@@ -2,9 +2,12 @@
 
 namespace ProposalPage\Sdk;
 
-use Appstract\LushHttp\Lush;
-use Appstract\LushHttp\Response\LushResponse;
-use function BenTools\QueryString\query_string;
+use Exception;
+use GuzzleHttp\Client as HttpClient;
+use ProposalPage\Sdk\Exception\FailedActionException;
+use ProposalPage\Sdk\Exception\NotFoundException;
+use ProposalPage\Sdk\Exception\ValidationException;
+use Psr\Http\Message\ResponseInterface;
 
 class Client
 {
@@ -20,7 +23,11 @@ class Client
             $this->apiUrl = $apiUrl;
         }
 
-        $this->httpClient = new Lush();
+        $this->httpClient = new HttpClient([
+            'base_uri' => $this->getApiUrl(),
+            'http_errors' => false,
+            'timeout' => 30.0
+        ]);
     }
 
     // Auth
@@ -32,7 +39,7 @@ class Client
         ]);
 
         if ($setToken) {
-            $this->token = $response->token;
+            $this->token = $response->json['token'];
         }
 
         return $response;
@@ -278,14 +285,28 @@ class Client
      * @param string $path
      * @param array $params
      * @param array $queryStringParams
-     * @return LushResponse
+     * @return mixed|ResponseInterface
+     * @throws FailedActionException
+     * @throws NotFoundException
+     * @throws ValidationException
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function request(string $method, string $path, array $params = [], array $queryStringParams = [])
     {
-        return $this->httpClient
-                ->url($this->getRequestUri($path, $queryStringParams), $params)
-                ->headers($this->getRequestHeaders())
-                ->$method();
+        $response = $this->httpClient->request($method, $path, [
+            'json' => $params,
+            'query' => $queryStringParams,
+            'headers' => $this->getRequestHeaders()
+        ]);
+
+        if (! $this->isSuccessfulResponse($response)) {
+            $this->handleRequestError($response);
+        }
+
+        $responseBody = (string) $response->getBody();
+        $response->json = json_decode($responseBody, true) ?: $responseBody;
+
+        return $response;
     }
 
     /**
@@ -294,33 +315,49 @@ class Client
     private function getRequestHeaders()
     {
         if (!$this->token) {
-            return [];
+            return [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ];
         }
 
         return [
-            'Authorization' => "Bearer {$this->token}"
+            'Authorization' => "Bearer {$this->token}",
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
         ];
     }
 
-    /**
-     * @param array $params
-     * @return string
-     */
-    private function getRequestQueryString(array $params = [])
+    private function isSuccessfulResponse(ResponseInterface $response)
     {
-        if (count($params) === 0) {
-            return "";
+        if (! $response) {
+            return false;
         }
 
-        $queryString = query_string($params);
-
-        return "?" . urldecode((string) $queryString);
+        return (int) substr($response->getStatusCode(), 0, 1) === 2;
     }
 
-    private function getRequestUri(string $path, array $queryStringParams = [])
+    /**
+     * @param ResponseInterface $response
+     * @throws FailedActionException
+     * @throws NotFoundException
+     * @throws ValidationException
+     * @throws Exception
+     */
+    private function handleRequestError(ResponseInterface $response)
     {
-        $queryString = $this->getRequestQueryString($queryStringParams);
+        if ($response->getStatusCode() === 422) {
+            throw new ValidationException(json_decode((string) $response->getBody(), true));
+        }
 
-        return "{$this->apiUrl}{$path}{$queryString}";
+        if ($response->getStatusCode() === 404) {
+            throw new NotFoundException();
+        }
+
+        if ($response->getStatusCode() === 400) {
+            throw new FailedActionException((string) $response->getBody());
+        }
+
+        throw new Exception((string) $response->getBody());
     }
 }
