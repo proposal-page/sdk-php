@@ -69,6 +69,20 @@ class ProjectTest extends TestCase
     }
 
     /** @test */
+    public function it_can_list_user_projects_paginated_with_a_specific_title_search()
+    {
+        $response = $this->authenticatedTestClient->listProjects(1, 6, 'Project title that does not exist');
+
+        $json = json_decode((string) $response->getBody(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(1, $response->json['page']);
+        $this->assertEquals(6, $response->json['limit']);
+        $this->assertEquals(count($response->json['items']), 0);
+        $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('PaginatedProjects'));
+    }
+
+    /** @test */
     public function it_can_list_project_templates_paginated()
     {
         $response = $this->authenticatedTestClient->listTemplates();

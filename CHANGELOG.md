@@ -2,6 +2,10 @@
 
 All notable changes to `proposal-page/sdk-php` will be documented in this file.
 
+## 0.5.0 - 2019-05-06
+- added the optional parameter `title` (default = null) to the listProjects method.
+- it's possible to list projects by title.
+
 ## 0.4.0 - 2019-05-03
 - replaced the lush http client with guzzle http client.
 - added exception handling.

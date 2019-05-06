@@ -40,7 +40,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         $client = new Client('http://localhost:3000');
 
-        $client->authenticate('teste@teste.com', 'teste');
+        $client->authenticate('gian_bine@hotmail.com', 'gian6280');
 
         return $client;
     }

@@ -70,12 +70,18 @@ class Client
         return $this->request('POST', "/projects/${templateId}/copy");
     }
 
-    public function listProjects($page = 1, $itemsPerPage = 6)
+    public function listProjects($page = 1, $itemsPerPage = 6, $title = null)
     {
-        return $this->request('GET', '/projects', [], [
+        $query = [
             'page' => $page,
             'itemsPerPage' => $itemsPerPage
-        ]);
+        ];
+
+        if ($title) {
+            $query['title'] = $title;
+        }
+
+        return $this->request('GET', '/projects', [], $query);
     }
 
     public function listProject($projectId)
