@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProposalPage\Sdk\Exception;
 
 use Exception;
 
-class FailedActionException extends Exception
+final class FailedActionException extends Exception
 {
     public function __construct(string $message)
     {
