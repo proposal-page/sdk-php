@@ -21,6 +21,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
         "helmich/phpunit-json-assert": "^3.0",
+        "nunomaduro/phpinsights": "^1.0",
         "phpunit/phpunit": "^8.1"
     },
     "autoload": {
@@ -36,7 +37,8 @@
     "scripts": {
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
-        "format": "vendor/bin/php-cs-fixer fix"
+        "format": "vendor/bin/php-cs-fixer fix",
+        "code-quality": "vendor/bin/phpinsights"
     },
     "config": {
         "sort-packages": true

@@ -49,6 +49,24 @@
      "updatedAt": {
        "type": "string"
      },
+     "customer": {
+       "type": "object"
+     },
+     "accepted": {
+       "type": "boolean"
+     },
+     "acceptToken": {
+       "type": "string"
+     },
+     "acceptReversionToken": {
+       "type": "string"
+     },
+     "acceptedAt": {
+       "type": "string"
+     },
+     "acceptReversionAt": {
+       "type": "string"
+     },
      "__v": {
        "type": "number"
      }

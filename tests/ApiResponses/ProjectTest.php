@@ -2,6 +2,8 @@
 
 namespace ProposalPage\Sdk\Tests;
 
+use ProposalPage\Sdk\Exception\FailedActionException;
+
 class ProjectTest extends TestCase
 {
     /** @test */
@@ -185,6 +187,7 @@ class ProjectTest extends TestCase
      * @test
      * @param $testProjectId
      * @depends it_can_create_and_return_a_project
+     * @return mixed
      */
     public function it_can_publish_a_specific_user_project($testProjectId)
     {
@@ -193,7 +196,10 @@ class ProjectTest extends TestCase
         $json = json_decode((string) $response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
+        $this->assertTrue($response->json['publish']);
         $this->assertJsonDocumentMatchesSchema($json, $this->getSchema('Project'));
+
+        return $testProjectId;
     }
 
     /**
@@ -221,6 +227,52 @@ class ProjectTest extends TestCase
         $response = $this->authenticatedTestClient->generateProjectCover($testProjectId);
 
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    /**
+     * @test
+     * @param $testProjectId
+     * @depends it_can_create_and_return_a_project
+     * @return mixed
+     */
+    public function it_can_set_a_customer_for_a_specific_user_project($testProjectId)
+    {
+        $customer = [
+            'name' => 'Gianluca Bine',
+            'email' => 'gian_bine@hotmail.com',
+            'phone' => '(42) 9 9104-4320'
+        ];
+
+        $response = $this->authenticatedTestClient->updateProject($testProjectId, [
+            'customer' => $customer
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($customer['name'], $response->json['customer']['name']);
+        $this->assertEquals($customer['email'], $response->json['customer']['email']);
+        $this->assertEquals($customer['phone'], $response->json['customer']['phone']);
+
+        return $testProjectId;
+    }
+
+    /**
+     * @test
+     * @param $testProjectId
+     * @depends it_can_set_a_customer_for_a_specific_user_project
+     * @depends it_can_publish_a_specific_user_project
+     * @return mixed
+     */
+    public function it_can_accept_a_specific_user_project($testProjectId)
+    {
+        $response = $this->authenticatedTestClient->acceptProject($testProjectId);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(
+            'The token and link to accept the project/proposal has been sent to the customer email',
+            $response->json['message']
+        );
+
+        return $testProjectId;
     }
 
     /**

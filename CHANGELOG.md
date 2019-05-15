@@ -2,6 +2,12 @@
 
 All notable changes to `proposal-page/sdk-php` will be documented in this file.
 
+## 0.6.0 - 2019-05-14
+- added the `acceptProject` method to create a accept intent for a project.
+- added the `confirmProjectAcceptance` method to confirm the accept intent for a project.
+- added the `revertProjectAcceptance` method to revert the acceptance of a project.
+- added the dev dependency `nunomaduro/phpinsights` to check code quality and applied fixes from it.
+
 ## 0.5.0 - 2019-05-06
 - added the optional parameter `title` (default = null) to the listProjects method.
 - it's possible to list projects by title.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ProposalPage\Sdk;
 
 use Exception;
@@ -9,7 +11,7 @@ use ProposalPage\Sdk\Exception\NotFoundException;
 use ProposalPage\Sdk\Exception\ValidationException;
 use Psr\Http\Message\ResponseInterface;
 
-class Client
+final class Client
 {
     private $apiUrl = 'https://api.proposalpage.com';
 
@@ -26,7 +28,7 @@ class Client
         $this->httpClient = new HttpClient([
             'base_uri' => $this->getApiUrl(),
             'http_errors' => false,
-            'timeout' => 30.0
+            'timeout' => 30.0,
         ]);
     }
 
@@ -35,7 +37,7 @@ class Client
     {
         $response = $this->request('POST', '/accounts/auth/token', [
             'username' => $username,
-            'password' => $password
+            'password' => $password,
         ]);
 
         if ($setToken) {
@@ -55,7 +57,7 @@ class Client
     {
         return $this->request('GET', '/projects/templates', [], [
             'page' => $page,
-            'itemsPerPage' => $itemsPerPage
+            'itemsPerPage' => $itemsPerPage,
         ]);
     }
 
@@ -74,7 +76,7 @@ class Client
     {
         $query = [
             'page' => $page,
-            'itemsPerPage' => $itemsPerPage
+            'itemsPerPage' => $itemsPerPage,
         ];
 
         if ($title) {
@@ -127,6 +129,21 @@ class Client
     public function viewProjectAndNotify($projectId)
     {
         return $this->request('PUT', "/projects/{$projectId}/view-and-notify");
+    }
+
+    public function acceptProject($projectId)
+    {
+        return $this->request('POST', "/projects/{$projectId}/accept");
+    }
+
+    public function confirmProjectAcceptance($acceptToken)
+    {
+        return $this->request('POST', "/projects/accept/{$acceptToken}");
+    }
+
+    public function revertProjectAcceptance($acceptReversionToken)
+    {
+        return $this->request('POST', "/projects/revert-accept/{$acceptReversionToken}");
     }
 
     // Blocks
@@ -292,6 +309,7 @@ class Client
      * @param array $params
      * @param array $queryStringParams
      * @return mixed|ResponseInterface
+     *
      * @throws FailedActionException
      * @throws NotFoundException
      * @throws ValidationException
@@ -302,7 +320,7 @@ class Client
         $response = $this->httpClient->request($method, $path, [
             'json' => $params,
             'query' => $queryStringParams,
-            'headers' => $this->getRequestHeaders()
+            'headers' => $this->getRequestHeaders(),
         ]);
 
         if (! $this->isSuccessfulResponse($response)) {
@@ -320,7 +338,7 @@ class Client
      */
     private function getRequestHeaders()
     {
-        if (!$this->token) {
+        if (! $this->token) {
             return [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -345,6 +363,7 @@ class Client
 
     /**
      * @param ResponseInterface $response
+     *
      * @throws FailedActionException
      * @throws NotFoundException
      * @throws ValidationException
